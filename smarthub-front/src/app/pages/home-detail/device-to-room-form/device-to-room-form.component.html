@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Agregar Dispositivo a la Habitación</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Seleccionar Dispositivo</mat-label>
+    <mat-select [(ngModel)]="selectedDeviceId">
+      <mat-option *ngFor="let device of devices" [value]="device.id">
+        {{ device.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onSave()" [disabled]="!selectedDeviceId">Guardar</button>
+</div>

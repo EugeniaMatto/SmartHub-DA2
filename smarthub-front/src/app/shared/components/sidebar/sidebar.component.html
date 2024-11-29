@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">Menu</mat-toolbar>
+<mat-nav-list>
+  <a class="sidebar-item" mat-list-item routerLink="/dashboard" routerLinkActive="active">
+    <mat-icon>dashboard</mat-icon>
+    Escritorio
+  </a>
+  <a class="sidebar-item" mat-list-item routerLink="/dashboard/homes" routerLinkActive="active" *ngIf="hasRole(['HomeOwner'])">
+    <mat-icon>home</mat-icon>
+    Casas
+  </a>
+  <a class="sidebar-item" mat-list-item routerLink="/dashboard/company" routerLinkActive="active" *ngIf="hasRole(['CompanyOwner'])">
+    <mat-icon>business</mat-icon>
+    Compañia
+  </a>
+  <a class="sidebar-item" mat-list-item routerLink="/dashboard/devices" routerLinkActive="active">
+    <mat-icon>devices</mat-icon>
+    Dispositivos
+  </a>
+</mat-nav-list>

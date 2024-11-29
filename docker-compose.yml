@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./SmartHub.WebApi
+    ports:
+      - "5000:80" # Puerto del backend .NET
+    networks:
+      - mynetwork
+
+  frontend:
+    build:
+      context: ./smarthub-front
+    ports:
+      - "4200:80" # Puerto donde el frontend Angular se servirá
+    networks:
+      - mynetwork
+    depends_on:
+      - backend # Garantiza que el backend esté disponible antes de iniciar el frontend
+
+networks:
+  mynetwork:
+    driver: bridge

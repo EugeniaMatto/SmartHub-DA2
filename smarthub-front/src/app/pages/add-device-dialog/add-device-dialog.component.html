@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Agregar nuevo dispositivo</h2>
+<mat-dialog-content>
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Dispositivo</mat-label>
+      <mat-select [(ngModel)]="deviceType" name="deviceType">
+        <mat-option value="window-sensors">window-sensors</mat-option>
+        <mat-option value="motion-sensors">motion-sensors</mat-option>
+        <mat-option value="cameras">cameras</mat-option>
+        <mat-option value="smart-lamps">smart-lamps</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="name" name="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Número de Modelo</mat-label>
+      <input matInput [(ngModel)]="modelNumber" name="modelNumber">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <input matInput [(ngModel)]="description" name="description">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fotos (URLs separadas por coma)</mat-label>
+      <input matInput [(ngModel)]="photos" name="photos">
+    </mat-form-field>
+
+    <!-- Mostrar UseTypes y SupportedActions solo si el tipo es 'cameras' -->
+    <div *ngIf="deviceType === 'cameras'">
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Uso</mat-label>
+        <mat-select [(ngModel)]="useTypes" name="useTypes" multiple>
+          <mat-option value="Outdoor">Outdoor</mat-option>
+          <mat-option value="Indoor">Indoor</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Acciones Soportadas</mat-label>
+        <mat-select [(ngModel)]="supportedActions" name="supportedActions" multiple>
+          <mat-option value="PersonDetection">PersonDetection</mat-option>
+          <mat-option value="MotionDetection">MotionDetection</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="onAddDevice()">Agregar</button>
+</mat-dialog-actions>

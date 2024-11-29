@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BussinesLogic\SmartHub.BussinesLogic.csproj" />
+    <ProjectReference Include="..\DataAccess\SmartHub.DataAccess.csproj" />
+    <ProjectReference Include="..\DB\SmartHub.DB.csproj" />
+    <ProjectReference Include="..\Domain\SmartHub.Domain.csproj" />
+    <ProjectReference Include="..\Exception\SmartHub.Exceptions.csproj" />
+    <ProjectReference Include="..\Model\SmartHub.Model.csproj" />
+  </ItemGroup>
+
+</Project>

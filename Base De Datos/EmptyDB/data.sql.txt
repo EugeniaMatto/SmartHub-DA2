@@ -1,0 +1,166 @@
+-- Create Database SmartHub
+CREATE DATABASE SmartHub;
+GO
+
+USE SmartHub;
+GO
+
+-- Table: User
+CREATE TABLE [dbo].[User](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[Name] [nvarchar](max) NOT NULL,
+	[Surname] [nvarchar](max) NOT NULL,
+	[Email] [nvarchar](max) NOT NULL,
+	[Password] [nvarchar](max) NOT NULL,
+	[ProfilePhoto] [nvarchar](max) NOT NULL DEFAULT (N''),
+	[Role] [int] NOT NULL,
+	  NOT NULL DEFAULT ('0001-01-01T00:00:00.0000000')
+);
+GO
+
+-- Table: Companies
+CREATE TABLE [dbo].[Companies](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[Name] [nvarchar](max) NOT NULL,
+	[LogoURL] [nvarchar](max) NOT NULL,
+	[Rut] [nvarchar](max) NOT NULL,
+	[OwnerId] [uniqueidentifier] NOT NULL,
+	CONSTRAINT [FK_Companies_User_OwnerId] FOREIGN KEY([OwnerId]) REFERENCES [dbo].[User]([Id])
+);
+GO
+
+-- Table: Devices
+CREATE TABLE [dbo].[Devices](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[Name] [nvarchar](max) NOT NULL,
+	[CompanyId] [uniqueidentifier] NOT NULL,
+	  NOT NULL DEFAULT ('0001-01-01T00:00:00.0000000'),
+	[Description] [nvarchar](max) NOT NULL DEFAULT (N''),
+	[Model] [nvarchar](max) NOT NULL DEFAULT (N''),
+	[Type] [int] NOT NULL,
+	[PhotosJson] [nvarchar](max) NOT NULL DEFAULT (N''),
+	[CamSupportedActionsJson] [nvarchar](max) NULL,
+	  NOT NULL DEFAULT (N''),
+	[UseTypeJson] [nvarchar](max) NULL,
+	CONSTRAINT [FK_Devices_Companies_CompanyId] FOREIGN KEY([CompanyId]) REFERENCES [dbo].[Companies]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Table: Homes
+CREATE TABLE [dbo].[Homes](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[Street] [nvarchar](max) NOT NULL,
+	[StreetNumber] [nvarchar](max) NOT NULL,
+	[Ubication_Lat] [int] NULL,
+	[Ubication_Lon] [int] NULL,
+	[OwnerId] [uniqueidentifier] NOT NULL,
+	[MaxMembers] [int] NOT NULL,
+	CONSTRAINT [FK_Homes_User_OwnerId] FOREIGN KEY([OwnerId]) REFERENCES [dbo].[User]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Table: Hardwares
+CREATE TABLE [dbo].[Hardwares](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[Online] [bit] NOT NULL,
+	[HomeId] [uniqueidentifier] NOT NULL,
+	[DeviceId] [uniqueidentifier] NOT NULL DEFAULT ('00000000-0000-0000-0000-000000000000'),
+	CONSTRAINT [FK_Hardwares_Devices_DeviceId] FOREIGN KEY([DeviceId]) REFERENCES [dbo].[Devices]([Id]),
+	CONSTRAINT [FK_Hardwares_Homes_HomeId] FOREIGN KEY([HomeId]) REFERENCES [dbo].[Homes]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Table: Notifications
+CREATE TABLE [dbo].[Notifications](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[HardwareId] [uniqueidentifier] NOT NULL,
+	[Event] [nvarchar](max) NOT NULL,
+	[Seen] [bit] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[UserEmail] [nvarchar](max) NOT NULL DEFAULT (N''),
+	CONSTRAINT [FK_Notifications_Hardwares_HardwareId] FOREIGN KEY([HardwareId]) REFERENCES [dbo].[Hardwares]([Id]),
+	CONSTRAINT [FK_Notifications_User_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[User]([Id])
+);
+GO
+
+-- Table: NotificationMembers
+CREATE TABLE [dbo].[NotificationMembers](
+	[HomeId] [uniqueidentifier] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	CONSTRAINT [FK_NotificationMembers_Homes_HomeId] FOREIGN KEY([HomeId]) REFERENCES [dbo].[Homes]([Id]),
+	CONSTRAINT [FK_NotificationMembers_User_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[User]([Id])
+);
+GO
+
+-- Table: Permission
+CREATE TABLE [dbo].[Permission](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[Name] [nvarchar](max) NOT NULL DEFAULT (N'')
+);
+GO
+
+-- Table: Sessions
+CREATE TABLE [dbo].[Sessions](
+	[Token] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[UserId] [uniqueidentifier] NOT NULL,
+	  NOT NULL DEFAULT ('0001-01-01T00:00:00.0000000'),
+	CONSTRAINT [FK_Sessions_User_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[User]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Table: UserHomePermissions
+CREATE TABLE [dbo].[UserHomePermissions](
+	[UserId] [uniqueidentifier] NOT NULL,
+	[HomeId] [uniqueidentifier] NOT NULL,
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[PermissionsJson] [nvarchar](max) NOT NULL,
+	CONSTRAINT [FK_UserHomePermissions_Homes_HomeId] FOREIGN KEY([HomeId]) REFERENCES [dbo].[Homes]([Id]),
+	CONSTRAINT [FK_UserHomePermissions_User_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[User]([Id])
+);
+GO
+
+-- Table: UserPermissions
+CREATE TABLE [dbo].[UserPermissions](
+	[PermissionsId] [uniqueidentifier] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	PRIMARY KEY ([PermissionsId], [UserId]),
+	CONSTRAINT [FK_UserPermissions_Permission_PermissionsId] FOREIGN KEY([PermissionsId]) REFERENCES [dbo].[Permission]([Id]) ON DELETE CASCADE,
+	CONSTRAINT [FK_UserPermissions_User_UserId] FOREIGN KEY([UserId]) REFERENCES [dbo].[User]([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Seed permissions for all users
+INSERT INTO Permission (Id, Name) VALUES 
+(NEWID(), 'getnotifications-notification'),
+(NEWID(), 'open-sensor'),
+(NEWID(), 'close-sensor'),
+(NEWID(), 'motiondetection-camera'),
+(NEWID(), 'persondetection-camera'),
+(NEWID(), 'getdevices-devices'),
+(NEWID(), 'getdevicetypes-devicetype'),
+(NEWID(), 'addcamera-camera');
+
+-- Seed admin-specific permissions
+INSERT INTO Permission (Id, Name) VALUES 
+(NEWID(), 'createadminaccount-administrator'),
+(NEWID(), 'deleteadminaccount-administrator'),
+(NEWID(), 'createcompanyowneraccount-companyowner'),
+(NEWID(), 'getaccounts-accounts'),
+(NEWID(), 'getcompany-companies');
+
+-- Seed company owner-specific permissions
+INSERT INTO Permission (Id, Name) VALUES 
+(NEWID(), 'createcompany-companies'),
+(NEWID(), 'addsensor-sensor'),
+(NEWID(), 'addcamera-camera');
+
+-- Seed home owner-specific permissions
+INSERT INTO Permission (Id, Name) VALUES 
+(NEWID(), 'newhome-home'),
+(NEWID(), 'addmember-members'),
+(NEWID(), 'adddevice-home'),
+(NEWID(), 'getmembers-members'),
+(NEWID(), 'getdevices-home'),
+(NEWID(), 'addnotificationmembers-members');
+GO

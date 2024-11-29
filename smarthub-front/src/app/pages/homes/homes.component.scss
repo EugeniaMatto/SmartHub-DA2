@@ -1,0 +1,27 @@
+.homes-container {
+    padding: 20px;
+    &-title {
+        display: flex;
+        gap: 2rem;
+    }
+  }
+  
+  .home-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .home-card {
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .home-card:hover {
+    transform: scale(1.05);
+  }
+  
+  mat-card {
+    height: 100%;
+  }
+  

@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Filtros de Dispositivos</h2>
+<mat-dialog-content>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Dispositivo</mat-label>
+      <mat-select [(ngModel)]="selectedType">
+        <mat-option value="all">Todos</mat-option>
+        <mat-option value="SecurityCam">Cámara</mat-option>
+        <mat-option value="WindowSensor">Sensor</mat-option>
+        <mat-option value="Lamp">Lámpara</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Habitación</mat-label>
+      <input matInput [(ngModel)]="selectedRoom" placeholder="Especifica la habitación">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="selectedStatus">
+        <mat-option value="all">Todos</mat-option>
+        <mat-option value="active">Activo</mat-option>
+        <mat-option value="inactive">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onApply()">Aplicar Filtros</button>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+</mat-dialog-actions>

@@ -1,0 +1,29 @@
+<div class="homes-container">
+    <div class="homes-container-title">
+      <h1>Hogares</h1>
+      <button mat-stroked-button (click)="openHomeForm()">Crear Hogar</button>
+    </div>
+  
+    <div *ngIf="homes && homes.length > 0; else noHomes" class="home-cards">
+      <h2>Lista de Hogares</h2>
+      <div class="home-cards-container">
+        <div *ngFor="let homeData of homes" class="home-card" (click)="navigateToHome(homeData.home.id)">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ homeData.home.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>Dirección: {{ homeData.home.street }} {{ homeData.home.streetNumber }}</p>
+              <p>Miembros: {{ homeData.home.maxMembers }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noHomes>
+      <p>No tienes hogares registrados.</p>
+      <button mat-stroked-button (click)="openHomeForm()">Crear Hogar</button>
+    </ng-template>
+  </div>
+  

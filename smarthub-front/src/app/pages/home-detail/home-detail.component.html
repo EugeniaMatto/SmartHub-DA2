@@ -1,0 +1,106 @@
+<div class="home-detail-container">
+    <div class="home-left-panel">
+      <div class="home-detail">
+        <div class="home-detail-title">
+          <h2>Detalles del Hogar: {{ home?.name }}</h2>
+          <div class="home-detail-title-actions">
+            <button mat-stroked-button (click)="openRoomForm()">Crear Habitación</button>
+            <button mat-stroked-button color="primary" (click)="openNotificationForm()">Administrar Notificaciones</button>
+        </div>
+  
+        <div *ngIf="rooms && rooms.length > 0; else noRooms" class="room-cards">
+          <h2>Lista de Habitaciones</h2>
+          <div class="room-cards-container">
+            <div *ngFor="let room of rooms" class="room-card">
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-title>{{ room.name }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div *ngIf="room.devices && room.devices.length > 0; else noDevices">
+                    <p>Dispositivos</p>
+                    <ul>
+                      <li *ngFor="let device of room.devices">
+                        <a
+                          (click)="openDeviceDetail(device)"
+                          class="home-detail-room-devices"
+                          matTooltip="Ver más información del dispositivo"
+                        >
+                          {{ device.name }}
+                        </a>
+                      </li>                      
+                    </ul>
+                    <button mat-stroked-button (click)="openDevicetoRoomForm(room)">Agregar Dispositivo</button>
+                  </div>
+                  <ng-template #noDevices>
+                    <p>Esta habitación no tiene dispositivos.</p>
+                    <button mat-stroked-button (click)="openDevicetoRoomForm(room)">Agregar Dispositivo</button>
+                  </ng-template>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+  
+        <div *ngIf="allDevices.length > 0" class="all-devices-table">
+          <h3>Todos los Dispositivos en el Hogar</h3>
+          <table class="device-table" style="width: 500px;">
+            <thead>
+              <tr>
+                <th>Nombre del Dispositivo</th>
+                <th>Habitación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let device of allDevices">
+                <td>{{ device.name }}</td>
+                <td>
+                  <select [(ngModel)]="device.selectedRoom" (change)="changeDeviceRoom(device)">
+                    <option *ngFor="let room of rooms" [value]="room.name">{{ room.name }}</option>
+                  </select>
+                </td>
+                <td>
+                  <button mat-stroked-button color="primary" (click)="toggleDevicePower(device, true)">Prender</button>
+                  <button mat-stroked-button color="warn" (click)="toggleDevicePower(device, false)">Apagar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <div class="home-right-panel">
+      <div *ngIf="showDevicesToAdd" class="device-selection">
+        <h3>Selecciona un Dispositivo para Agregar a la Habitación {{ selectedRoom }}</h3>
+        <table class="device-table">
+          <thead>
+            <tr>
+              <th>Dispositivo</th>
+              <th>Nuevo Nombre</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let device of devices">
+              <td>{{ device.name }}</td>
+              <td>
+                <input [(ngModel)]="device.newName" placeholder="Nuevo nombre" />
+              </td>
+              <td>
+                <button mat-stroked-button color="primary" (click)="addDeviceToRoom(device.id, device.newName)">Añadir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button mat-stroked-button (click)="closeDeviceForm()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #noRooms>
+    <p>Este hogar no tiene habitaciones.</p>
+    <button mat-stroked-button (click)="openRoomForm()">Agregar Habitación</button>
+  </ng-template>
+  

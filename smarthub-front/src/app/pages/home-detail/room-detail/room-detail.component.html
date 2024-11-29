@@ -1,0 +1,17 @@
+<div class="room-detail">
+    <h2>Detalles de la Habitación: {{ roomName }}</h2>
+  
+    <div *ngIf="devices && devices.length > 0; else noDevices">
+      <h3>Lista de Dispositivos</h3>
+      <mat-card *ngFor="let device of devices">
+        <mat-card-header>
+          <mat-card-title>{{ device.name }}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  
+    <ng-template #noDevices>
+      <p>Esta habitación no tiene dispositivos.</p>
+    </ng-template>
+  </div>
+  

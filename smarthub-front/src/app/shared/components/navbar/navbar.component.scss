@@ -1,0 +1,31 @@
+.logo {
+    width: 150px;
+    margin-right: 10px;
+    fill: #fff;
+    path, text {
+      fill: #fff;
+    }
+    text {
+        font-family: "Nunito Sans", sans-serif;
+    }
+}
+
+mat-menu {
+  max-width: 300px;
+
+  .mat-menu-item {
+    white-space: normal;
+  }
+
+  mat-slide-toggle {
+    display: flex;
+    align-items: center;
+    margin: 0 16px;
+  }
+}
+
+.navbar {
+  &-notifications {
+    color: black;
+  }
+}

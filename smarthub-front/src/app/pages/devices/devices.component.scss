@@ -1,0 +1,39 @@
+.devices-container {
+  .buttons-container {
+    display: flex;
+    gap: 10px; 
+    margin-bottom: 20px; 
+  }
+
+  .device-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #673ab7;
+      color: white;
+      text-align: left;
+    }
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+  }
+
+  .edit-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+}

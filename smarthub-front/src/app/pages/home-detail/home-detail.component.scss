@@ -1,0 +1,43 @@
+.home-detail-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.home-left-panel {
+  flex: 2;
+}
+
+.home-right-panel {
+  flex: 1;
+  border-left: 2px solid #ddd;
+  padding-left: 20px;
+}
+
+.device-table {
+  width: 500px; 
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.device-table th,
+.device-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.device-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.device-table td {
+  vertical-align: middle;
+}
+
+.home-detail-room-devices {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}

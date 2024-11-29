@@ -1,0 +1,118 @@
+<app-nav></app-nav>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="side" opened>
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+
+  <div class="main-content">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Bienvenido {{ user.name }} a Smarthub</span>
+    </mat-toolbar>
+
+    <div class="content-area">
+      <ng-container *ngIf="isDashboardRoute; else otherRoutes">
+        <mat-accordion>
+          <section class="dashboard-section" *ngIf="user.roles.includes('Administrator')">
+            <div class="dashboard-subtitle">
+              <h2>Escritorio de Administrador</h2>
+              <button mat-stroked-button (click)="openCreateAdmin()">Crear Usuario Administrador</button>
+              <button mat-stroked-button (click)="openCreateCompanyOwner()">Crear Usuario Dueño de Empresa</button>
+              <button mat-stroked-button *ngIf="!user.roles.includes('HomeOwner') && !user.roles.includes('CompanyOwner')" (click)="openCreateHome()">Agregar permisos de Dueño Hogar</button>
+            </div>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Todos los usuarios de la plataforma </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+            <div class="filters">
+              <mat-form-field appearance="fill">
+                <mat-label>Buscar</mat-label>
+                <input matInput placeholder="Buscar por nombre, apellido o rol" [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()">
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Filtrar por rol</mat-label>
+                <mat-select [(ngModel)]="selectedRole" (selectionChange)="applyFilters()">
+                  <mat-option value="">Todos</mat-option>
+                  <mat-option *ngFor="let role of availableRoles" [value]="role">{{ role }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+              <app-data-table
+                [data]="filteredAccounts"
+                [columns]="adminColumns"
+                [showDeleteCondition]="isAdmin"
+                (delete)="deleteAdmin($event)">
+              </app-data-table>
+              <mat-paginator
+                [length]="totalAccounts"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 20]"
+                (page)="onPageChange($event)">
+              </mat-paginator>
+            </mat-expansion-panel>
+
+            
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Todas las empresas de la plataforma </mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-data-table
+                [data]="allCompanies"
+                [columns]="CompaniesColumns">
+              </app-data-table>
+              <mat-paginator
+                [length]="companyTotal"
+                [pageSize]="companyPageSize"
+                [pageSizeOptions]="[5, 10, 20]"
+                (page)="onCompanyPageChange($event)">
+              </mat-paginator>
+            </mat-expansion-panel>            
+          </section>
+          
+          <section class="dashboard-section"  *ngIf="user.roles.includes('HomeOwner')">
+            <hr />
+            <div class="dashboard-subtitle">
+              <h2>Escritorio de Dueño de Hogar</h2>
+              <button mat-stroked-button (click)="openCreateMemberHome()">Agregar Miembro</button>
+            </div>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Miembros del Hogar </mat-panel-title>
+              </mat-expansion-panel-header>
+              <app-data-table
+                [data]="homeMembers"
+                [columns]="homeMemberColumns"
+                (edit)="openEditPermissions($event)"
+                (delete)="deleteAdmin($event)">
+              </app-data-table>
+            </mat-expansion-panel>
+          </section>
+          <section class="dashboard-section"  *ngIf="user.roles.includes('CompanyOwner')">
+            <hr />
+            <div class="dashboard-subtitle">
+              <h2>Escritorio de Dueño de Empresa</h2>
+              <button mat-stroked-button *ngIf="!user.roles.includes('HomeOwner') && !user.roles.includes('Administrador')" (click)="openCreateHome()">Agregar permiso de Dueño de hogar</button>
+            </div>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title> Datos de la Empresa </mat-panel-title>
+              </mat-expansion-panel-header>
+              <h2>Información de la Compañía</h2>
+              <p *ngIf="company"><strong>Nombre:</strong> {{ company.name }}</p>
+              <p *ngIf="company && company.logoUrl"><strong>Logo:</strong> <img [src]="company.logoUrl" alt="Logo" width="100"></p>
+              <p *ngIf="company"><strong>RUT:</strong> {{ company.rut }}</p>
+
+            </mat-expansion-panel>
+          </section>
+        </mat-accordion>
+      </ng-container>
+
+      <ng-template #otherRoutes>
+        <router-outlet></router-outlet>
+      </ng-template>
+    </div>
+  </div>
+</mat-drawer-container>

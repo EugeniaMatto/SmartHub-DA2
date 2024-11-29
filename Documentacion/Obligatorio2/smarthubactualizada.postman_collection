@@ -1,0 +1,1278 @@
+{
+	"info": {
+		"_postman_id": "cdc913cd-d822-4290-a56a-650ed550aff5",
+		"name": "SmartHub - Obligatorio 1 Copy",
+		"description": "API que expone endpoints para la gestión de dispositivos inteligentes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23199255",
+		"_collection_link": "https://www.postman.com/telecoms-astronomer-64903690/workspace/da2-obligatorio-1/collection/23199255-cdc913cd-d822-4290-a56a-650ed550aff5?action=share&source=collection_link&creator=23199255"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"item": [
+				{
+					"name": "AddHome",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Name\": \"Mi Apto\",\r\n    \"Street\": \"Camino J\",\r\n    \"StreetNumber\": \"77\",\r\n    \"Ubication\": {\r\n        \"Lat\": 66,\r\n        \"Lon\": -69\r\n    },\r\n    \"MaxMembers\": 5,\r\n    \"Rooms\": [\"Living\", \"Cuarto\", \"Baño\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddHomeDevice",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"lampara venta\",\r\n    \"DeviceId\":\"efbdac98-407e-401a-83dc-542cf04cc620\",\r\n    \"Room\": \"Armario\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes/{{HomeId}}/devices",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes",
+								"{{HomeId}}",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RenameNameHomeDevice",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Hardware nuevo nombre\",\r\n    \"HardwareId\":\"0a25a7f1-4b18-45b4-5dbc-08dcec8e5fd5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes/{{HomeId}}/devices",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes",
+								"{{HomeId}}",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetHomeDevice",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes/{{HomeId}}/devices",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes",
+								"{{HomeId}}",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get HomeRooms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes/{{HomeId}}/rooms",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes",
+								"{{HomeId}}",
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddRooms to Home",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Rooms\": [\"Armario\", \"Balcon\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes/{{HomeId}}/rooms",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes",
+								"{{HomeId}}",
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Room Hardware",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Room\": \"Terraza\",\r\n\t\"HardwareId\": \"e6f911ec-3d0d-4d7f-500f-08dcf56427ba\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/homes/{{HomeId}}/devices/room",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"homes",
+								"{{HomeId}}",
+								"devices",
+								"room"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /homes  \nAccesibles solo por usuarios HomeOwner"
+		},
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "AddHomeNotificationMembers",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    \"billiejeanking@tennis.com\"\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/members/{{HomeId}}/notification",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"{{HomeId}}",
+								"notification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetHomeMembers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/members?homeId={{HomeId}}",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"members"
+							],
+							"query": [
+								{
+									"key": "homeId",
+									"value": "{{HomeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddHomeMember",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"memberEmail\": \"billiejeanking@tennis.com\",\r\n\t\t\"permissions\": [\"ListDevices\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/members?homeId={{HomeId}}",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"members"
+							],
+							"query": [
+								{
+									"key": "homeId",
+									"value": "{{HomeId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddPermission to Member",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Permissions\": [\r\n        \"ListDevices\",\r\n\t\t\t\t\"AssociateDevices\",\r\n\t\t\t\t\"ChangeDeviceName\"\r\n    ],\r\n    \"HomeId\": \"463d5525-94e9-49a4-b3bc-08dcfd438ed2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/members/{{MemberId}}/permissions",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"members",
+								"{{MemberId}}",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /members  \nAccesibles solo por usuarios HomeOwner"
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "AddCompany",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Banifox SA\",\r\n  \"logoUrl\": \"banifox.jpg\",\r\n  \"rut\": \"9987112\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/companies",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCompanies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/companies?companyName={companyName}&fullName={fullName}&pageNumber=2&pageSize=2",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							],
+							"query": [
+								{
+									"key": "companyName",
+									"value": "{companyName}"
+								},
+								{
+									"key": "fullName",
+									"value": "{fullName}"
+								},
+								{
+									"key": "pageNumber",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /companies  \nAccesibles solo por usuarios CompanyOwner (addCompany) y Administrator (GetCompanies)"
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "GetNotifications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/notifications?seen=false&user_id={{UserId}}",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"notifications"
+							],
+							"query": [
+								{
+									"key": "seen",
+									"value": "false"
+								},
+								{
+									"key": "user_id",
+									"value": "{{UserId}}"
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /notifications  \nAccesibles por todos los usuarios autenticados"
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "GetAccounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/accounts?role=CompanyOwner&fullName=Novak Djokovic&pageNumber=0&pageSize=10",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "role",
+									"value": "CompanyOwner"
+								},
+								{
+									"key": "fullName",
+									"value": "Novak Djokovic"
+								},
+								{
+									"key": "pageNumber",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /administrator  \nAccesibles solo por usuarios Administrator"
+		},
+		{
+			"name": "Administrator",
+			"item": [
+				{
+					"name": "AddAdminAccount",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"Julio\",\r\n  \"Surname\": \"Gomez\",\r\n  \"Email\": \"ed@gmail.com\",\r\n  \"Password\": \"tardes!!!!2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/administrators",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"administrators"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAdminAccount",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/administrators?accountId=52fe7844-2db3-4d32-81dc-08dce5bdc2a4",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"administrators"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "52fe7844-2db3-4d32-81dc-08dce5bdc2a4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /administrators  \nAccesibles solo por usuarios Administrators"
+		},
+		{
+			"name": "HomeOwner",
+			"item": [
+				{
+					"name": "AddHomeOwner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Susana\",\r\n    \"Surname\": \"Gimenez\",\r\n    \"Email\": \"euge@gmail.com\",\r\n    \"Password\": \"Susana!\",\r\n    \"ProfilePhoto\": \"susaanalamaslssinda.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/home-owners",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"home-owners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HomeOwner Permissions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/home-owners/permissions",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"home-owners",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /home.owners  \nAccesibles solo por todos los usuarios"
+		},
+		{
+			"name": "CompanyOwner",
+			"item": [
+				{
+					"name": "AddCompanyOwner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"Julio\",\r\n  \"Surname\": \"Perez\",\r\n  \"Email\": \"sassd@gmail.com\",\r\n  \"Password\": \"buenas!!!!2\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/company-owners",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"company-owners"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /company-owners  \nAccesibles solo por todos los usuarios"
+		},
+		{
+			"name": "Device",
+			"item": [
+				{
+					"name": "GetDevices",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/devices?name=&model=PE&pageNumber=1&pageSize=5",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"devices"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								},
+								{
+									"key": "model",
+									"value": "PE"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /devices  \nAccesibles solo por todos los usuarios autenticados"
+		},
+		{
+			"name": "DeviceTypes",
+			"item": [
+				{
+					"name": "GetDeviceTypes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/device-types",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"device-types"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /device-types  \nAccesibles solo por todos los usuarios autenticados"
+		},
+		{
+			"name": "WindowSensor",
+			"item": [
+				{
+					"name": "AddWindowSensor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"Window Sensor mega\",\r\n  \"ModelNumber\": \"KS-133\",\r\n  \"Description\": \"A rapid window sensor for home automation.\",\r\n  \"Photos\": [\r\n    \"https://megaK.com/photo1.jpg\",\r\n    \"https://megaK.com/photo2.jpg\"\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/window-sensors",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"window-sensors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WindowSensor OpenNotification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/window-sensors/open?hardware_id=22ef5422-7e2d-4eb1-f988-08dcefe1028d",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"window-sensors",
+								"open"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "22ef5422-7e2d-4eb1-f988-08dcefe1028d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WindowSensor CloseNotification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/window-sensors/close?hardware_id=22ef5422-7e2d-4eb1-f988-08dcefe1028d",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"window-sensors",
+								"close"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "22ef5422-7e2d-4eb1-f988-08dcefe1028d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /window-sensors  \nAccesibles solo por CompanyOwners (addSensor)  \nAccesibles solo por todos los usuarios autenticados (notifications)"
+		},
+		{
+			"name": "MotionSensor",
+			"item": [
+				{
+					"name": "AddMotionSensor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"Motion Sensor mega\",\r\n  \"ModelNumber\": \"PE-133\",\r\n  \"Description\": \"A rapid motion sensor for home automation.\",\r\n  \"Photos\": [\r\n    \"https://motion.com/photo1.jpg\",\r\n    \"https://motion.com/photo2.jpg\"\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/motion-sensors",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"motion-sensors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MotionSensor MotionDetectionNotification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/motion-sensors/motion-detection?hardware_id=aa4937d7-e31f-476e-36ee-08dcefd1a7a5",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"motion-sensors",
+								"motion-detection"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "aa4937d7-e31f-476e-36ee-08dcefd1a7a5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /motion-sensors  \nAccesibles solo por CompanyOwners (addSensor)  \nAccesibles solo por todos los usuarios autenticados (notifications)"
+		},
+		{
+			"name": "SecurityCam",
+			"item": [
+				{
+					"name": "AddSecurityCam",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Camera PRO XX8\",\r\n    \"ModelNumber\": \"AS-102\",\r\n    \"Description\": \"HD 4K ULTRA PersonDetection\",\r\n    \"Photos\": [\"url221.jpg\", \"url44.jpg\"],\r\n    \"UseTypes\": [\r\n        \"Outdoor\",\r\n        \"Indoor\"\r\n    ],\r\n    \"SupportedActions\": [ \r\n        \"PersonDetection\",\r\n        \"MotionDetection\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/cameras",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"cameras"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "8FBF18B6-8539-4A19-7760-08DCE70A56A0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SecurityCam MotionDetection",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/cameras/motion-detection?hardware_id=f2772bd2-2233-4d1f-de4a-08dce7b0e3e1",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"cameras",
+								"motion-detection"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "f2772bd2-2233-4d1f-de4a-08dce7b0e3e1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SecurityCam PersonDetection",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/cameras/person-detection?user_detection=dani@gmail.com&hardware_id=8644c635-be37-4db2-f736-08dce737900b",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"cameras",
+								"person-detection"
+							],
+							"query": [
+								{
+									"key": "user_detection",
+									"value": "dani@gmail.com"
+								},
+								{
+									"key": "hardware_id",
+									"value": "8644c635-be37-4db2-f736-08dce737900b"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /cameras  \nAccesibles solo por CompanyOwners (addCamera)  \nAccesibles solo por todos los usuarios autenticados (notifications)"
+		},
+		{
+			"name": "SmartLamp",
+			"item": [
+				{
+					"name": "AddSmartLamp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Name\": \"Smart Lamp Samsung\",\r\n  \"ModelNumber\": \"SL-90\",\r\n  \"Description\": \"Rapid led smart lamp\",\r\n  \"Photos\": [\r\n    \"https://smartlamp.com/photo1.jpg\",\r\n    \"https://smartlamp.com/photo2.jpg\"\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/smart-lamps",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"smart-lamps"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SmartLamp OnNotification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/smart-lamps/on?hardware_id=1cc8765d-938f-4cf9-f989-08dcefe1028d",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"smart-lamps",
+								"on"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "1cc8765d-938f-4cf9-f989-08dcefe1028d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SmartLamp OffNotification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/smart-lamps/off?hardware_id=1cc8765d-938f-4cf9-f989-08dcefe1028d",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"smart-lamps",
+								"off"
+							],
+							"query": [
+								{
+									"key": "hardware_id",
+									"value": "1cc8765d-938f-4cf9-f989-08dcefe1028d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Asocia los endpoints de /smart-lamps  \nAccesibles solo por CompanyOwner (addSmartLamp)  \nAccesibles solo por todos los usuarios autenticados (notifications)"
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"Email\":\"eugemat@gmail.com\",\r\n    \"Password\":\"Susana!\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/user/login",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserHomes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SmartHub_Host}}/api/user/homes",
+							"host": [
+								"{{SmartHub_Host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"homes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "SmartHub_Host",
+			"value": "https://localhost:7196"
+		},
+		{
+			"key": "UserId",
+			"value": "8C83A0FA-0FA3-444A-838E-08DCE7267241"
+		}
+	]
+}
